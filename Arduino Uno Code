@@ -1,0 +1,153 @@
+/*This Code is for Automatic Drainage System
+
+ * Clock Wise(CW) and CounterClock Wise is for motor  
+
+ * Red is for Warning Light/Siren
+
+ * Alarm (al) is for Warning Alarm/Sound 
+
+ */
+
+int CW=7;
+
+int CCW=8;
+
+int red=4;
+
+int al=2;
+
+void setup () {
+
+  pinMode (CW,OUTPUT);
+
+  pinMode (CCW,OUTPUT);
+
+  pinMode (red,OUTPUT);
+
+  pinMode (al,OUTPUT);
+
+  Serial.begin (9600);}
+
+ 
+
+void loop() {
+
+  // read the input on analog pin 0 for water level.
+
+  int value = analogRead(A0);
+
+  //Conditions for Lid Lifting
+
+  if (value > 520) {
+
+    Serial.println("Very heavy Rain");
+
+    digitalWrite (red,HIGH);//warning light
+
+    digitalWrite (al,HIGH);//alarm
+
+    delay(3000);
+
+    digitalWrite (CW,HIGH);
+
+    digitalWrite (CCW,LOW);
+
+    delay(3000);//set time or position for lifting lid
+
+    digitalWrite (CW,LOW);
+
+    digitalWrite (CCW,LOW);
+
+    digitalWrite (al,LOW);
+
+    while(value < 30) //Condition for Stopping the loop till water is decreased
+
+    {}
+
+    digitalWrite (al,HIGH);
+
+    delay(3000);
+
+    digitalWrite (CW,LOW);
+
+    digitalWrite (CCW,HIGH);
+
+    delay(3000);//set time or position for Closing lid
+
+    digitalWrite (CW,LOW);
+
+    digitalWrite (CCW,LOW);
+
+    digitalWrite (al,LOW);
+
+    digitalWrite (red,LOW);
+
+  }
+
+  else if ((value >= 400) && (value <= 520)) {
+
+    Serial.println("AVERAGE Rain");
+
+    digitalWrite (red,HIGH);//warning light
+
+    digitalWrite (al,HIGH);//alarm
+
+    delay(3000);
+
+    digitalWrite (CW,HIGH);
+
+    digitalWrite (CCW,LOW);
+
+    delay(3000);//set time or position for lifting lid
+
+    digitalWrite (CW,LOW);
+
+    digitalWrite (CCW,LOW);
+
+    digitalWrite (al,LOW);
+
+    while(value < 30)//Condition for Stopping the loop till water is decreased
+
+    {}
+
+    digitalWrite (al,HIGH);
+
+    delay(3000);
+
+    digitalWrite (CW,LOW);
+
+    digitalWrite (CCW,HIGH);
+
+    delay(3000);//set time or position for closing lid
+
+    digitalWrite (CW,LOW);
+
+    digitalWrite (CCW,LOW);
+
+    digitalWrite (al,LOW);
+
+    digitalWrite (red,LOW);
+
+    }
+
+    
+
+  else{
+
+    Serial.println("Dry Weather");//No Action for Dry Weather
+
+    digitalWrite (al,LOW);
+
+    digitalWrite (red,LOW);
+
+    digitalWrite (CCW,LOW);
+
+    digitalWrite (CW,LOW);
+
+    
+
+  delay(1000);//time for loop repeat
+
+  }
+
+  }
